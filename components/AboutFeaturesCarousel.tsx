@@ -14,15 +14,11 @@ export default function AboutFeaturesCarousel({
   className = "",
 }: AboutFeaturesCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isAutoRotating, setIsAutoRotating] = useState(true);
-  const [isHovering, setIsHovering] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const featureCount = features.length;
 
-  // Auto-rotation effect
+  // Auto-rotation effect (continues even on hover)
   useEffect(() => {
-    if (!isAutoRotating || isHovering) return;
-
     intervalRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % featureCount);
     }, autoRotateInterval);
@@ -30,18 +26,7 @@ export default function AboutFeaturesCarousel({
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isAutoRotating, isHovering, autoRotateInterval, featureCount]);
-
-  // Pause on hover
-  const handleMouseEnter = useCallback(() => {
-    setIsHovering(true);
-    setIsAutoRotating(false);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsHovering(false);
-    setIsAutoRotating(true);
-  }, []);
+  }, [autoRotateInterval, featureCount]);
 
   // Navigation handlers
   const goToPrev = useCallback(() => {
@@ -105,8 +90,6 @@ export default function AboutFeaturesCarousel({
   return (
     <div
       className={`carousel-container relative w-full max-w-6xl mx-auto ${className}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       role="region"
       aria-roledescription="carousel"
       aria-label="Features carousel"
@@ -145,7 +128,6 @@ export default function AboutFeaturesCarousel({
                   goToIndex(index);
                 }
               }}
-              whileHover={isActive ? { scale: 1.02 } : {}}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               {/* Icon */}

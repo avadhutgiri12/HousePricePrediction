@@ -1,0 +1,14 @@
+HowItWorks
+PredictionForm
+PredictionResult
+Footer
+
+how-it-works/
+│   │   └── page.tsx
+│   │
+│   ├── predict/
+│   │   └── page.tsx
+│   │
+│   └── api/
+│       └── predict/
+
