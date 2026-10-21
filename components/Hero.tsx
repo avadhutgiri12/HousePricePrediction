@@ -84,7 +84,6 @@ export default function Hero() {
               style={{ transitionDelay: "0.1s" }}
             >
               <span className="block ">Instant Property</span>
-              <br className="hidden lg:block" />
               <span className="block text-[#18794E]">Price Estimates</span>
             </motion.h1>
 

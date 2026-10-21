@@ -617,15 +617,337 @@ body {
   }
 }
 
+
 /* =============================================================================
-   ACCESSIBILITY
+   HOW IT WORKS — EXPANDABLE HORIZONTAL PANELS
+   ============================================================================= */
+
+.slider-container {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+  height: 390px;
+  overflow: hidden;
+}
+
+/* Base panel */
+.slider-panel {
+  position: relative;
+  flex: 0 0 76px;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 26px;
+
+  background-color: #171917;
+  cursor: pointer;
+
+  transition:
+    flex-grow 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    flex-basis 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 350ms ease,
+    filter 350ms ease;
+}
+
+/* Subtle overlay above optional background imagery */
+.slider-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background: linear-gradient(
+    180deg,
+    rgba(10, 12, 11, 0.08) 0%,
+    rgba(10, 12, 11, 0.25) 45%,
+    rgba(10, 12, 11, 0.82) 100%
+  );
+}
+
+/* Active panel expands */
+.slider-panel--active {
+  flex: 4 1 0%;
+  border-color: rgba(24, 121, 78, 0.55);
+  cursor: default;
+}
+
+/* Inactive panels remain narrow */
+.slider-panel--inactive {
+  flex: 0 0 76px;
+}
+
+/* =============================================================================
+   COLLAPSED PANEL
+   ============================================================================= */
+
+.slider-collapsed {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 10px;
+  transition: opacity 250ms ease;
+}
+
+.slider-panel--active .slider-collapsed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Vertical step number or label */
+.slider-panel__vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+
+  white-space: nowrap;
+  letter-spacing: 0.12em;
+}
+
+/* Expand hint - vertical text with 70% opacity, matching step number style */
+
+
+
+.slider-collapsed__hint {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+
+  display: block;
+  width: max-content;
+
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  white-space: nowrap;
+
+  transform: translate(50%, -50%) rotate(90deg) !important;
+  transform-origin: center center;
+
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+
+/* =============================================================================
+   EXPANDED PANEL
+   ============================================================================= */
+
+.slider-expanded {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+  padding: 28px;
+
+  overflow: hidden;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 300ms ease,
+    visibility 300ms ease;
+}
+
+.slider-panel--active .slider-expanded {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 180ms;
+}
+
+/* Content typography */
+.slider-expanded h3 {
+  max-width: 480px;
+  color: #ffffff;
+  font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
+}
+
+.slider-expanded p {
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+/* Step number badge */
+.slider-step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+
+  border: 1px solid rgba(24, 121, 78, 0.65);
+  border-radius: 50%;
+
+  color: #6ee7ad;
+  background: rgba(24, 121, 78, 0.12);
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Icon container */
+.slider-expanded .slider-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #6ee7ad;
+}
+
+/* Details list */
+.slider-expanded ul {
+  margin-top: 18px;
+}
+
+.slider-expanded li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Green detail bullet */
+.slider-detail-dot {
+  width: 7px;
+  height: 7px;
+  margin-top: 7px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: #18794e;
+}
+
+/* =============================================================================
+   HOVER AND FOCUS
+   ============================================================================= */
+
+.slider-panel--inactive:hover {
+  border-color: rgba(24, 121, 78, 0.5);
+}
+
+.slider-panel:focus-visible {
+  outline: 2px solid #18794e;
+  outline-offset: 4px;
+}
+
+/* =============================================================================
+   TABLET
+   ============================================================================= */
+
+@media (max-width: 900px) {
+  .slider-container {
+    height: 360px;
+    gap: 9px;
+  }
+
+  .slider-panel {
+    flex-basis: 62px;
+    border-radius: 22px;
+  }
+
+  .slider-panel--inactive {
+    flex-basis: 62px;
+  }
+
+  .slider-expanded {
+    padding: 22px;
+  }
+}
+
+/* =============================================================================
+   MOBILE — KEEP THE ACTIVE PANEL WIDE AND OTHER PANELS COMPACT
+   ============================================================================= */
+
+@media (max-width: 600px) {
+  .slider-container {
+    height: 390px;
+    gap: 6px;
+  }
+
+  .slider-panel {
+    flex-basis: 36px;
+    border-radius: 18px;
+  }
+
+  .slider-panel--inactive {
+    flex-basis: 36px;
+  }
+
+  .slider-panel--active {
+    flex: 1 1 0%;
+  }
+
+  .slider-collapsed {
+    padding: 14px 5px;
+  }
+
+  .slider-expanded {
+    padding: 18px;
+  }
+
+  .slider-step-number {
+    width: 34px;
+    height: 34px;
+    font-size: 0.75rem;
+  }
+
+  .slider-expanded h3 {
+    font-size: 1.5rem;
+  }
+
+  .slider-expanded p {
+    font-size: 0.85rem;
+  }
+
+  .slider-expanded ul {
+    margin-top: 12px;
+  }
+
+  .slider-expanded li {
+    font-size: 0.78rem;
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION
    ============================================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .carousel-track,
-  .carousel-card,
-  .carousel-nav-btn {
+  .slider-panel,
+  .slider-collapsed,
+  .slider-expanded {
     transition: none !important;
-    animation: none !important;
   }
 }
