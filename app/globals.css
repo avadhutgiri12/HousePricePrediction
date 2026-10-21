@@ -24,3 +24,584 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* =============================================================================
+   ANIMATIONS — Global keyframe definitions
+   ============================================================================= */
+
+/* Fade up animation — used for staggered entrance effects */
+.animate-fade-up {
+  animation: fadeUp 0.7s ease-out both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in animation — simple opacity fade */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Float animation — subtle vertical floating motion for cards */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Slow pulse animation — for background orb accents */
+.animate-pulse-slow {
+  animation: pulseSlow 8s ease-in-out infinite;
+}
+
+@keyframes pulseSlow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.1);
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION — Respect user accessibility preferences
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-float,
+  .animate-pulse-slow,
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =============================================================================
+   UTILITY CLASSES — Reusable component styles
+   ============================================================================= */
+
+/* Glassmorphism card — frosted glass effect with subtle border */
+.glass-card {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+}
+
+/* Glassmorphism card hover state */
+.glass-card-hover {
+  @apply transition-all duration-500 hover:border-white/20 hover:bg-white/10;
+}
+
+/* Gradient text — brand gradient for headings */
+.gradient-text-emerald {
+  @apply bg-linear-to-r from-[#18794E] to-[#22c55e] bg-clip-text text-transparent;
+}
+
+/* Subtle divider — horizontal gradient line */
+.divider-subtle {
+  @apply h-px bg-linear-to-r from-transparent via-white/10 to-transparent;
+}
+
+/* Subtle divider — vertical gradient line */
+.divider-subtle-vertical {
+  @apply w-px h-16 bg-linear-to-b from-transparent via-white/10 to-transparent;
+}
+
+/* Accent line — emerald gradient for hover effects */
+.accent-line-emerald {
+  @apply absolute bottom-0 left-6 right-6 h-px bg-linear-to-r from-transparent via-[#18794E]/30 to-transparent;
+}
+
+/* Button base — minimal ghost button */
+.btn-ghost {
+  @apply px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-medium transition-all duration-300;
+}
+
+/* Button base — minimal outline button */
+.btn-outline {
+  @apply px-6 py-3 rounded-full bg-transparent hover:bg-white/5 border border-white/5 text-white/60 hover:text-white text-sm font-medium transition-all duration-300;
+}
+
+/* Badge — minimal inline badge */
+.badge-minimal {
+  @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 text-[#18794E] text-xs font-medium tracking-widest uppercase border border-white/10 backdrop-blur-sm;
+}
+
+/* Pulse dot — for live/active indicators */
+.pulse-dot {
+  @apply w-1.5 h-1.5 rounded-full bg-[#18794E] animate-pulse;
+}
+
+/* =============================================================================
+   TEXT EFFECTS — Special text treatments
+   ============================================================================= */
+
+/* Outline/stroke text — large heading with stroke effect */
+.text-stroke {
+  -webkit-text-stroke: 1px currentColor;
+  color: transparent;
+}
+
+.text-stroke-white {
+  -webkit-text-stroke: 1px white;
+  color: transparent;
+}
+
+.text-stroke-emerald {
+  -webkit-text-stroke: 1px #18794E;
+  color: transparent;
+}
+
+.text-stroke-white\/50 {
+  -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+  color: transparent;
+}
+
+/* =============================================================================
+   LAYOUT — Common layout patterns
+   ============================================================================= */
+
+/* Section base — full screen centered section */
+.section-full {
+  @apply w-full min-h-screen relative flex items-center justify-center overflow-hidden;
+}
+
+/* Container — max width container with responsive padding */
+.container-main {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+/* Grid — responsive feature grid */
+.grid-features {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6;
+}
+
+/* Grid — stats horizontal layout */
+.grid-stats {
+  @apply flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16;
+}
+
+
+
+/* =============================================================================
+   CAROUSEL — UNO-STYLE STACKED 3D CARDS
+   ============================================================================= */
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  perspective: 1400px;
+  isolation: isolate;
+}
+
+/* Deck area */
+.carousel-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 460px;
+  padding: 2rem 0;
+  transform-style: preserve-3d;
+}
+
+/* Base card */
+.carousel-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: min(78%, 32rem);
+  min-height: 270px;
+  padding: 2rem;
+
+  overflow: hidden;
+  border-radius: 24px;
+
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+
+  transition:
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 450ms ease,
+    filter 450ms ease,
+    box-shadow 450ms ease;
+
+  will-change: transform, opacity;
+}
+
+/* =============================================================================
+   TOP CARD — ACTIVE
+   ============================================================================= */
+
+.carousel-card--active {
+  transform:
+    translate(-50%, -50%)
+    translate3d(0, 0, 100px)
+    rotate(0deg)
+    scale(1);
+
+  opacity: 1;
+  filter: none;
+  z-index: 10;
+
+  pointer-events: auto;
+
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.38),
+    0 8px 24px rgba(0, 0, 0, 0.18);
+
+  cursor: default;
+}
+
+/* =============================================================================
+   SECOND LAYER — LEFT PEEK
+   ============================================================================= */
+
+.carousel-card--side-1 {
+  transform:
+    translate(-50%, -50%)
+    translate3d(-34px, 10px, 35px)
+    rotate(-6deg)
+    scale(0.96);
+
+  opacity: 0.9;
+  filter: brightness(0.82);
+
+  z-index: 8;
+  pointer-events: auto;
+  cursor: pointer;
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* =============================================================================
+   THIRD LAYER — RIGHT PEEK
+   React must add the carousel-card--right class to the appropriate card.
+   ============================================================================= */
+
+.carousel-card--side-1.carousel-card--right {
+  transform:
+    translate(-50%, -50%)
+    translate3d(34px, 18px, 5px)
+    rotate(6deg)
+    scale(0.92);
+
+  opacity: 0.78;
+  filter: brightness(0.7);
+
+  z-index: 6;
+}
+
+/* =============================================================================
+   FOURTH LAYER — FAR LEFT
+   ============================================================================= */
+
+.carousel-card--side-2 {
+  transform:
+    translate(-50%, -50%)
+    translate3d(-55px, 22px, -30px)
+    rotate(-11deg)
+    scale(0.88);
+
+  opacity: 0.58;
+  filter: brightness(0.6);
+
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Far-right card */
+.carousel-card--side-2.carousel-card--right {
+  transform:
+    translate(-50%, -50%)
+    translate3d(55px, 28px, -50px)
+    rotate(11deg)
+    scale(0.84);
+
+  opacity: 0.42;
+  filter: brightness(0.5);
+
+  z-index: 2;
+}
+
+/* Cards further away */
+.carousel-card--hidden {
+  transform:
+    translate(-50%, -50%)
+    translate3d(0, 35px, -100px)
+    rotate(0deg)
+    scale(0.75);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =============================================================================
+   CARD CONTENT
+   ============================================================================= */
+
+.carousel-card .feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1.25rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.carousel-card h3 {
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+}
+
+.carousel-card p {
+  line-height: 1.75;
+}
+
+/* Emerald accent for the active card indicator */
+.carousel-card--active::after {
+  content: "";
+  position: absolute;
+
+  right: 1.5rem;
+  bottom: 1.5rem;
+
+  width: 36px;
+  height: 3px;
+
+  border-radius: 999px;
+  background: #18794e;
+
+  box-shadow: 0 0 16px rgba(24, 121, 78, 0.5);
+}
+
+/* =============================================================================
+   NAVIGATION BUTTONS
+   ============================================================================= */
+
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 46px;
+  height: 46px;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+
+  background: rgba(20, 20, 20, 0.85);
+  color: white;
+
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+
+  transform: translateY(-50%);
+
+  transition:
+    background 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+.carousel-nav-btn:hover {
+  background: rgba(24, 121, 78, 0.22);
+  border-color: #18794e;
+  box-shadow: 0 0 22px rgba(24, 121, 78, 0.2);
+}
+
+.carousel-nav-btn:focus-visible {
+  outline: 2px solid #18794e;
+  outline-offset: 4px;
+}
+
+.carousel-nav-btn--prev {
+  left: 0;
+}
+
+.carousel-nav-btn--next {
+  right: 0;
+}
+
+/* =============================================================================
+   TABLET
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  .carousel-track {
+    min-height: 420px;
+  }
+
+  .carousel-card {
+    width: min(76%, 30rem);
+    padding: 1.75rem;
+  }
+
+  .carousel-card--side-1 {
+    transform:
+      translate(-50%, -50%)
+      translate3d(-24px, 8px, 30px)
+      rotate(-5deg)
+      scale(0.96);
+  }
+
+  .carousel-card--side-1.carousel-card--right {
+    transform:
+      translate(-50%, -50%)
+      translate3d(24px, 14px, 5px)
+      rotate(5deg)
+      scale(0.92);
+  }
+
+  .carousel-card--side-2 {
+    transform:
+      translate(-50%, -50%)
+      translate3d(-38px, 18px, -30px)
+      rotate(-9deg)
+      scale(0.88);
+  }
+
+  .carousel-card--side-2.carousel-card--right {
+    transform:
+      translate(-50%, -50%)
+      translate3d(38px, 24px, -50px)
+      rotate(9deg)
+      scale(0.84);
+  }
+}
+
+/* =============================================================================
+   MOBILE
+   ============================================================================= */
+
+@media (max-width: 640px) {
+  .carousel-container {
+    perspective: 1000px;
+  }
+
+  .carousel-track {
+    min-height: 390px;
+    padding: 1.5rem 0;
+  }
+
+  .carousel-card {
+    width: calc(100% - 3.5rem);
+    min-height: 245px;
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .carousel-card--active {
+    transform:
+      translate(-50%, -50%)
+      translate3d(0, 0, 65px)
+      rotate(0deg)
+      scale(1);
+  }
+
+  .carousel-card--side-1 {
+    transform:
+      translate(-50%, -50%)
+      translate3d(-15px, 8px, 25px)
+      rotate(-4deg)
+      scale(0.96);
+  }
+
+  .carousel-card--side-1.carousel-card--right {
+    transform:
+      translate(-50%, -50%)
+      translate3d(15px, 13px, 0)
+      rotate(4deg)
+      scale(0.92);
+  }
+
+  .carousel-card--side-2 {
+    transform:
+      translate(-50%, -50%)
+      translate3d(-24px, 18px, -25px)
+      rotate(-7deg)
+      scale(0.88);
+  }
+
+  .carousel-card--side-2.carousel-card--right {
+    transform:
+      translate(-50%, -50%)
+      translate3d(24px, 22px, -45px)
+      rotate(7deg)
+      scale(0.84);
+  }
+
+  .carousel-nav-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .carousel-card h3 {
+    font-size: 1.75rem;
+  }
+
+  .carousel-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track,
+  .carousel-card,
+  .carousel-nav-btn {
+    transition: none !important;
+    animation: none !important;
+  }
+}

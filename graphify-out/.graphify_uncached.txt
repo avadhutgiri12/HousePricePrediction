@@ -1,0 +1,8 @@
+D:\Study\Projects\House Price Prediction\house-price-prediction\AGENTS.md
+D:\Study\Projects\House Price Prediction\house-price-prediction\README.md
+D:\Study\Projects\House Price Prediction\house-price-prediction\public\file.svg
+D:\Study\Projects\House Price Prediction\house-price-prediction\public\globe.svg
+D:\Study\Projects\House Price Prediction\house-price-prediction\public\images\hero-house.jpg
+D:\Study\Projects\House Price Prediction\house-price-prediction\public\next.svg
+D:\Study\Projects\House Price Prediction\house-price-prediction\public\vercel.svg
+D:\Study\Projects\House Price Prediction\house-price-prediction\public\window.svg
