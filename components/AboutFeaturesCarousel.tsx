@@ -1,23 +1,15 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-interface Feature {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-}
+import { features } from "@/data/features";
 
 interface AboutFeaturesCarouselProps {
-  features: Feature[];
   autoRotateInterval?: number;
   className?: string;
 }
 
 export default function AboutFeaturesCarousel({
-  features,
   autoRotateInterval = 2000,
   className = "",
 }: AboutFeaturesCarouselProps) {
@@ -119,27 +111,6 @@ export default function AboutFeaturesCarousel({
       aria-roledescription="carousel"
       aria-label="Features carousel"
     >
-      {/* Navigation Buttons */}
-      <motion.button
-        className="carousel-nav-btn carousel-nav-btn--prev"
-        onClick={goToPrev}
-        aria-label="Previous feature"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <ChevronLeft className="w-5 h-5" aria-hidden="true" />
-      </motion.button>
-
-      <motion.button
-        className="carousel-nav-btn carousel-nav-btn--next"
-        onClick={goToNext}
-        aria-label="Next feature"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <ChevronRight className="w-5 h-5" aria-hidden="true" />
-      </motion.button>
-
       {/* Carousel Track */}
       <div
         className="carousel-track flex items-center justify-center min-h-100 px-8"
@@ -163,7 +134,8 @@ export default function AboutFeaturesCarousel({
               style={{ zIndex }}
               role="listitem"
               aria-roledescription="slide"
-              aria-label={`Feature ${index + 1} of ${featureCount}`}
+              aria-label={`${feature.title} — feature ${index + 1} of ${featureCount}`}
+              title={feature.title}
               aria-current={isActive ? "true" : "false"}
               tabIndex={isActive ? 0 : -1}
               onClick={() => !isActive && goToIndex(index)}
@@ -181,10 +153,9 @@ export default function AboutFeaturesCarousel({
                 <feature.icon className="w-7 h-7 text-white/70" aria-hidden="true" />
               </div>
 
-              {/* Title with outline/stroke effect */}
+              {/* Title - solid black */}
               <h3
-                className="text-3xl lg:text-4xl font-light text-stroke-white tracking-tight mb-3"
-                style={{ WebkitTextStroke: "1px currentColor", color: "transparent" }}
+                className="text-3xl lg:text-4xl font-light text-black tracking-tight mb-3"
               >
                 {feature.title}
               </h3>

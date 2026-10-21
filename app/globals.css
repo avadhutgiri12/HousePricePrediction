@@ -310,12 +310,6 @@ body {
   color: #171717;
 }
 
-/* Active card title */
-.carousel-card--active h3 {
-  color: #111111;
-  -webkit-text-stroke: 0;
-}
-
 /* Active card description */
 .carousel-card--active p {
   color: #646970;
@@ -421,12 +415,6 @@ body {
 }
 
 /* Dark-card typography */
-.carousel-card--side-1 h3,
-.carousel-card--side-2 h3 {
-  color: #f5f5f5;
-  -webkit-text-stroke: 0;
-}
-
 .carousel-card--side-1 p,
 .carousel-card--side-2 p {
   color: #a4a6aa;

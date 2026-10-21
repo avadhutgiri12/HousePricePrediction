@@ -1,49 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Target, Brain, BarChart3, Shield, Zap, Users, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import AboutFeaturesCarousel from "./AboutFeaturesCarousel";
+import { stats } from "@/data/features";
 import "@/app/globals.css";
-
-const features = [
-  {
-    icon: Brain,
-    title: "ML-Powered Estimates",
-    description: "Advanced machine learning models trained on real property data to deliver accurate price predictions.",
-  },
-  {
-    icon: Target,
-    title: "Precise Valuations",
-    description: "Our algorithms consider location, size, amenities, market trends, and comparable sales for precision.",
-  },
-  {
-    icon: Zap,
-    title: "Instant Results",
-    description: "Get property price estimates in seconds — no waiting, no appointments, just data-driven insights.",
-  },
-  {
-    icon: Shield,
-    title: "Transparent Methodology",
-    description: "Understand how your estimate was calculated with clear breakdowns of contributing factors.",
-  },
-  {
-    icon: BarChart3,
-    title: "Market Intelligence",
-    description: "Access neighborhood trends, price history, and market analytics to make informed decisions.",
-  },
-  {
-    icon: Users,
-    title: "Built for Everyone",
-    description: "Whether you're buying, selling, or investing — our tool adapts to your property journey.",
-  },
-];
-
-const stats = [
-  { value: "10K+", label: "Properties Analyzed" },
-  { value: "94%", label: "Accuracy Rate" },
-  { value: "50+", label: "Data Points" },
-  { value: "24/7", label: "Availability" },
-];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -164,7 +125,7 @@ export default function About() {
             initial="hidden"
             animate="visible"
           >
-            <AboutFeaturesCarousel features={features} autoRotateInterval={2000} />
+            <AboutFeaturesCarousel autoRotateInterval={2000} />
           </motion.div>
 
           {/* Mission - Minimal footer */}
