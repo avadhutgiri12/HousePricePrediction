@@ -144,23 +144,29 @@ export default function HowItWorksSlider({
                 aria-hidden={!isActive}
                 inert={!isActive}
               >
-                {/* Top row */}
+                {/* Top row - step number badge left, footer right */}
                 <div className="slider-expanded__top">
                   <span className="slider-step-number">
                     STEP {String(step.number).padStart(2, "0")}
                   </span>
 
+                  <div className="slider-expanded__footer slider-expanded__footer--top-right">
+                    <span>
+                      {String(index + 1).padStart(2, "0")} /{" "}
+                      {String(steps.length).padStart(2, "0")}
+                    </span>
+
+                    <span className="slider-expanded__arrow">
+                      <ArrowRight
+                        className="h-5 w-5"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </div>
                 </div>
 
                 {/* Main content */}
                 <div className="slider-expanded__content">
-                  <div className="slider-icon">
-                    <step.icon
-                      className="h-7 w-7"
-                      aria-hidden="true"
-                    />
-                  </div>
-
                   <h3 className="slider-expanded__title">
                     {step.title}
                   </h3>
@@ -180,21 +186,6 @@ export default function HowItWorksSlider({
                       </li>
                     ))}
                   </ul>
-                </div>
-
-                {/* Bottom row */}
-                <div className="slider-expanded__footer">
-                  <span>
-                    {String(index + 1).padStart(2, "0")} /{" "}
-                    {String(steps.length).padStart(2, "0")}
-                  </span>
-
-                  <span className="slider-expanded__arrow">
-                    <ArrowRight
-                      className="h-5 w-5"
-                      aria-hidden="true"
-                    />
-                  </span>
                 </div>
               </div>
             </div>
