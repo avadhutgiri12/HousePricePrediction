@@ -150,9 +150,6 @@ export default function HowItWorksSlider({
                     STEP {String(step.number).padStart(2, "0")}
                   </span>
 
-                  <span className="slider-expanded__category">
-                    HOUSE PRICE PREDICTION
-                  </span>
                 </div>
 
                 {/* Main content */}
