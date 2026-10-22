@@ -127,48 +127,6 @@ export default function About() {
           >
             <AboutFeaturesCarousel autoRotateInterval={2000} />
           </motion.div>
-
-          {/* Mission - Minimal footer */}
-          <motion.div
-            className="mt-20 lg:mt-24 pt-12 lg:pt-16 border-t border-white/5"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="max-w-2xl mx-auto text-center">
-              <motion.p className="text-white/40 text-sm tracking-widest uppercase font-light mb-3" variants={itemVariants}>
-                Our Principle
-              </motion.p>
-              <motion.h3 className="text-3xl lg:text-4xl font-light text-white leading-tight mb-6 tracking-tight" variants={itemVariants}>
-                Clarity over complexity.
-                <br />
-                <span className="font-medium text-white/70">Always.</span>
-              </motion.h3>
-              <motion.p className="text-white/30 text-base leading-relaxed max-w-lg mx-auto" variants={itemVariants}>
-                Every feature, every data point, every prediction — designed to give you the confidence
-                to decide without hesitation.
-              </motion.p>
-            </div>
-
-            {/* CTA - Minimal — uses global .btn-ghost and .btn-outline */}
-            <motion.div className="mt-12 flex items-center justify-center gap-3" variants={itemVariants} style={{ transitionDelay: '0.3s' }}>
-              <motion.button
-                className="btn-ghost group"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Explore the Model
-                <ChevronRight className="w-4 h-4 text-white/50 group-hover:text-[#18794E] transition-colors" />
-              </motion.button>
-              <motion.button
-                className="btn-outline"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                View Methodology
-              </motion.button>
-            </motion.div>
-          </motion.div>
         </div>
       </section>
     </>

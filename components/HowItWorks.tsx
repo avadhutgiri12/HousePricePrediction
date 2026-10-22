@@ -122,43 +122,6 @@ export default function HowItWorks() {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* CTA */}
-          <motion.div
-            className="mt-16 lg:mt-20 pt-12 lg:pt-16 border-t border-white/5"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            style={{ transitionDelay: '0.3s' }}
-          >
-            <div className="max-w-2xl mx-auto text-center">
-              <motion.p className="text-white/40 text-sm tracking-widest uppercase font-light mb-3" variants={itemVariants}>
-                Ready to Get Started
-              </motion.p>
-              <motion.h3 className="text-3xl lg:text-4xl font-light text-white leading-tight mb-6 tracking-tight" variants={itemVariants}>
-                Get Your Property Estimate
-                <br />
-                <span className="font-medium text-white/70">In Seconds</span>
-              </motion.h3>
-              <motion.div className="flex items-center justify-center gap-3" variants={itemVariants}>
-                <motion.button
-                  className="btn-ghost group"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Try It Now
-                  <ArrowRight className="w-4 h-4 text-white/50 group-hover:text-[#18794E] transition-colors" />
-                </motion.button>
-                <motion.button
-                  className="btn-outline"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  View Sample Report
-                </motion.button>
-              </motion.div>
-            </div>
-          </motion.div>
         </div>
       </section>
     </>

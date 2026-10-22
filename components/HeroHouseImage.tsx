@@ -10,11 +10,12 @@ import { useState } from "react";
  * it renders a premium placeholder with a house silhouette so the layout never
  * breaks and no broken-image icon is shown.
  */
-interface HeroHouseImageProps {
+export interface HeroHouseImageProps {
   className?: string;
+  alt?: string;
 }
 
-export default function HeroHouseImage({ className = "" }: HeroHouseImageProps) {
+export default function HeroHouseImage({ className = "", alt = "Modern architectural house with clean lines and large windows" }: HeroHouseImageProps) {
   const [error, setError] = useState(false);
 
   if (error) {
@@ -51,7 +52,7 @@ export default function HeroHouseImage({ className = "" }: HeroHouseImageProps) 
       <Image
         fill
         src="/images/heroIMG.jpg"
-        alt="Modern two-story residential house with clean architecture"
+        alt={alt}
         className="object-cover w-full h-full"
         sizes="(max-width: 768px) 100vw, 100vw"
         priority

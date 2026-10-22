@@ -1,54 +1,39 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Home, Users, Mail, Briefcase, Target } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
 
-const leftLinks = [
-  { href: "/contact", label: "Contact", Icon: Mail },
-  { href: "/about", label: "About", Icon: Home },
-  { href: "/customers", label: "Customers", Icon: Users },
+/**
+ * Navbar — Sticky navigation for House Price Prediction.
+ *
+ * Features:
+ *   • Full-width sticky header with contained content
+ *   • Brand mark with emerald accent
+ *   • Desktop: Horizontal nav with hover/focus states
+ *   • Mobile: Slide-down drawer with Framer Motion
+ *   • Respects prefers-reduced-motion
+ *   • Keyboard accessible with visible focus states
+ *   • Scroll-aware background opacity
+ */
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/predict", label: "Predict Price" },
+  { href: "/how-it-works", label: "How It Works" },
+  { href: "/about", label: "About" },
 ];
 
-const rightLinks = [
-  { href: "/predict", label: "Predict", Icon: Target, primary: true },
-  { href: "/portfolio", label: "Portfolio", Icon: Briefcase, primary: false },
-];
-
-const NavLink = ({ href, label, Icon, primary = false }: { href: string; label: string; Icon: React.ComponentType<{ className?: string }>; primary?: boolean }) => (
-  <Link
-    href={href}
-    className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E]/50 ${
-      primary
-        ? "bg-[#18794E] text-white hover:bg-[#156a44] active:scale-[0.97] shadow-[0_4px_16px_rgba(24,121,78,0.3)]"
-        : "text-[#171717]/70 hover:text-[#171717] hover:bg-[#18794E]/10"
-    }`}
-  >
-    <Icon className="w-4 h-4" aria-hidden="true" />
-    {label}
-  </Link>
-);
-
-const MobileNavLink = ({ href, label, Icon, primary = false, onClick }: { href: string; label: string; Icon: React.ComponentType<{ className?: string }>; primary?: boolean; onClick: () => void }) => (
-  <Link
-    href={href}
-    onClick={onClick}
-    className={`flex items-center gap-3 px-4 py-3 text-base font-medium rounded-xl transition-all text-center ${
-      primary
-        ? "bg-[#18794E] text-white hover:bg-[#156a44]"
-        : "text-[#171717]/70 hover:text-[#18794E] hover:bg-[#18794E]/10"
-    }`}
-  >
-    <Icon className="w-5 h-5" aria-hidden="true" />
-    {label}
-  </Link>
-);
+const ctaLink = { href: "/predict", label: "Get Estimate" };
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     setMounted(true);
@@ -59,132 +44,189 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  const closeMenu = () => setIsOpen(false);
+
+  const transitionDuration = prefersReducedMotion ? 0 : 0.3;
+
   if (!mounted) {
     return (
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-7xl px-4" aria-label="Main navigation">
-        <div className="rounded-3xl bg-white/80 backdrop-blur-xl border border-[#E5E7E2]/50 shadow-[0_4px_24px_rgba(0,0,0,0.08)]" />
+      <nav
+        className="fixed top-0 left-0 right-0 z-50"
+        aria-label="Main navigation"
+        role="navigation"
+      >
+        <div className="h-16" />
       </nav>
     );
   }
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-7xl px-4" aria-label="Main navigation">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50"
+      aria-label="Main navigation"
+      role="navigation"
+    >
       <div
-        className={`relative rounded-3xl bg-white/70 backdrop-blur-xl border transition-all duration-300 ease-out ${
+        className={`relative h-16 transition-all duration-300 ease-out ${
           isScrolled
-            ? "bg-white/80 border-[#E5E7E2]/60 shadow-[0_8px_32px_rgba(0,0,0,0.12)]"
-            : "border-[#E5E7E2]/40 shadow-[0_4px_24px_rgba(0,0,0,0.08)]"
+            ? "bg-white/95 backdrop-blur-xl border-b border-[#E5E7E2]/60 shadow-[0_1px_3px_rgba(0,0,0,0.05),0_4px_12px_rgba(0,0,0,0.04)]"
+            : "bg-transparent"
         }`}
       >
-        {/* Background glow effect */}
-        <div className="absolute inset-0 rounded-3xl bg-linear-to-r from-[#18794E]/5 via-transparent to-[#18794E]/5 opacity-0 transition-opacity duration-500" aria-hidden="true" />
 
-        <div className="relative flex h-14 items-center justify-between px-5 gap-4">
-          {/* Left side - Mobile: Logo | Desktop: Left links */}
-          <div className="flex items-center gap-2">
-            {/* Mobile logo - only on mobile */}
-            <Link
-              href="/"
-              className="lg:hidden flex items-center gap-2 text-lg font-bold tracking-tight text-[#171717]"
-              aria-label="HousePrice Home"
-            >
-              <span className="relative">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#18794E] block" />
-                <span className="absolute -inset-0.5 rounded-full bg-[#18794E]/20 animate-pulse" aria-hidden="true" />
-              </span>
-              HousePrice
-            </Link>
-
-            {/* Desktop left links - hidden on mobile */}
-            <div className="hidden lg:flex items-center gap-1">
-              {leftLinks.map((link) => (
-                <NavLink key={link.href} {...link} />
-              ))}
-            </div>
-          </div>
-
-          {/* Center - Logo (desktop only) */}
+        <div className="relative flex h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 items-center justify-between gap-4">
+          {/* Left: Brand / Logo */}
           <Link
             href="/"
-            className="hidden lg:flex items-center gap-2 text-lg font-bold tracking-tight text-[#171717] shrink-0 mx-4"
-            aria-label="HousePrice Home"
+            className={`flex items-center gap-2 text-xl font-bold tracking-tight shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 rounded-md px-2 py-1 -mx-2 -my-1 ${
+              isScrolled
+                ? "focus-visible:ring-offset-white"
+                : "focus-visible:ring-offset-transparent"
+            }`}
+            aria-label="HomeWorth Home"
           >
-            <span className="relative">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#18794E] block" />
-              <span className="absolute -inset-0.5 rounded-full bg-[#18794E]/20 animate-pulse" aria-hidden="true" />
+            <Image
+              src="/images/logo.png"
+              alt="HomeWorth"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+              priority
+            />
+            <span className="hidden sm:inline flex items-baseline gap-0.5">
+              <span style={{ color: "#000a1a" }}>Home</span>
+              <span style={{ color: "#18794e" }}>Worth</span>
             </span>
-            HousePrice
           </Link>
 
-          {/* Right side - Desktop: Right links | Mobile: Hamburger menu */}
-          <div className="flex items-center gap-2">
-            {/* Desktop right links - hidden on mobile */}
-            <div className="hidden lg:flex items-center gap-2">
-              {rightLinks.map((link) => (
-                <NavLink key={link.href} {...link} />
-              ))}
-            </div>
+          {/* Center: Desktop Navigation Links */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-3 py-2 text-sm font-medium rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 ${
+                  isScrolled
+                    ? "text-[#525252] hover:text-[#171717] hover:bg-[#18794E]/5 focus-visible:ring-offset-white"
+                    : "text-white/90 hover:text-white hover:bg-white/10 focus-visible:ring-offset-transparent"
+                }`}
+                aria-current={link.href === "/" ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
 
-            {/* Mobile menu button - only on mobile */}
+          {/* Right: CTA + Mobile Menu Button */}
+          <div className="flex items-center gap-2">
+            {/* Desktop CTA */}
+            <Link
+              href={ctaLink.href}
+              className="hidden lg:flex items-center justify-center gap-2 px-5 py-2.5 bg-[#18794E] text-white rounded-xl font-medium text-sm transition-all duration-200 hover:bg-[#156a44] hover:shadow-[0_4px_16px_rgba(24,121,78,0.3)] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            >
+              {ctaLink.label}
+            </Link>
+
+            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 rounded-xl text-[#171717]/70 hover:text-[#171717] hover:bg-[#18794E]/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E]/50"
+              className={`lg:hidden p-2 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 ${
+                isScrolled
+                  ? "text-[#525252] hover:text-[#171717] hover:bg-[#18794E]/10 focus-visible:ring-offset-white"
+                  : "text-white hover:text-white hover:bg-white/10 focus-visible:ring-offset-transparent"
+              }`}
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile menu with Framer Motion animation */}
+        {/* Mobile Menu Drawer */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               id="mobile-menu"
-              className="lg:hidden overflow-hidden bg-white/95 backdrop-blur-xl border-t border-[#E5E7E2]/50"
+              className="lg:hidden absolute top-full left-0 right-0"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: transitionDuration, ease: "easeOut" }}
+              role="navigation"
+              aria-label="Mobile navigation"
             >
-              <div className="px-5 py-4 space-y-2">
-                {leftLinks.map((link) => (
-                  <MobileNavLink
-                    key={link.href}
-                    {...link}
-                    onClick={() => setIsOpen(false)}
-                  />
-                ))}
-                <motion.div
-                  className="pt-2 border-t border-[#E5E7E2]/50"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                />
-                {rightLinks.map((link) => (
-                  <MobileNavLink
-                    key={link.href}
-                    {...link}
-                    onClick={() => setIsOpen(false)}
-                  />
-                ))}
+              <div className="bg-white/98 backdrop-blur-xl border-b border-[#E5E7E2]/60 shadow-[0_8px_24px_rgba(0,0,0,0.08)] px-4 pb-4">
+                <div className="py-4 space-y-1">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={closeMenu}
+                      className={`block px-4 py-3 text-base font-medium rounded-xl transition-all ${
+                        link.href === "/"
+                          ? "bg-[#18794E]/10 text-[#18794E]"
+                          : "text-[#525252] hover:text-[#171717] hover:bg-[#F7F7F2]"
+                      } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 focus-visible:ring-offset-white`}
+                      aria-current={link.href === "/" ? "page" : undefined}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="pt-3 border-t border-[#E5E7E2]/50">
+                  <Link
+                    href={ctaLink.href}
+                    onClick={closeMenu}
+                    className="block w-full text-center px-4 py-3 bg-[#18794E] text-white rounded-xl font-medium text-base transition-all hover:bg-[#156a44] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                  >
+                    {ctaLink.label}
+                  </Link>
+                </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Mobile menu backdrop */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="lg:hidden fixed inset-0 top-16 z-40 bg-black/30 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: transitionDuration }}
+              onClick={closeMenu}
+              aria-hidden="true"
+            />
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Style for pulse animation */}
+      {/* Reduced motion style override */}
       <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.4; transform: scale(1); }
-          50% { opacity: 0.1; transform: scale(1.3); }
-        }
-        .animate-pulse { animation: pulse 2s ease-in-out infinite; }
         @media (prefers-reduced-motion: reduce) {
-          .animate-pulse { animation: none; }
+          .transition-all,
+          .transition-colors,
+          .transition-opacity,
+          .transition-height {
+            transition-duration: 0.01ms !important;
+          }
         }
       `}</style>
     </nav>

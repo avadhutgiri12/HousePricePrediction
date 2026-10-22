@@ -32,6 +32,7 @@ Web-based real-estate valuation tool accessed through a browser. Users enter pro
 
 - Brand name: HousePrice
 - Accent color: emerald #18794E (used in Hero, CTA buttons, and Navbar brand mark)
+- Color palette: #D98327, #ECE8AF, #4A943E, #186049 (user-specified binding constraint)
 - Voice: direct, data-driven ("True Value", "Estimated property price")
 
 ## Evidence on Hand
@@ -50,4 +51,8 @@ Web-based real-estate valuation tool accessed through a browser. Users enter pro
 
 ## Accessibility & Inclusion
 
-Omit — no product-specific requirement was established.
+- Screen reader optimized: ARIA labels, live regions, proper heading hierarchy, form labels, alt text standards
+- High contrast support: respects `prefers-contrast` media query
+- Reduced motion: respects `prefers-reduced-motion` media query
+- Full keyboard accessibility: focus management, semantic HTML, visible focus states
+- Color contrast: meets WCAG 2.1 AA minimums

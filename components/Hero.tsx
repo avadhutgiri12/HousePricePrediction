@@ -83,8 +83,8 @@ export default function Hero() {
               variants={itemVariants}
               style={{ transitionDelay: "0.1s" }}
             >
-              <span className="block ">Instant Property</span>
-              <span className="block text-[#18794E]">Price Estimates</span>
+              <span className="block ">Every Home Has a Value.</span>
+              <span className="block text-[#18794E]">Discover Yours.</span>
             </motion.h1>
 
             {/* Description */}
@@ -93,7 +93,7 @@ export default function Hero() {
               variants={itemVariants}
               style={{ transitionDelay: "0.2s" }}
             >
-              Enter property details. Get an ML-driven price estimate in seconds.
+              Get an intelligent property price estimate in seconds using machine learning. Enter your property details and receive a data-driven valuation you can trust.
             </motion.p>
 
             {/* CTA Buttons */}
