@@ -296,7 +296,7 @@ export default function PredictionForm() {
       {/* Form Header */}
       <div className="mb-8">
         <motion.div
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#18794E]/10 text-[#18794E] text-xs font-semibold tracking-wide uppercase"
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-semibold tracking-wide uppercase backdrop-blur-sm border border-white/20"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1, duration: transitionDuration }}
@@ -304,10 +304,10 @@ export default function PredictionForm() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#18794E] animate-pulse" aria-hidden="true" />
           Property Details
         </motion.div>
-        <h2 className="text-2xl lg:text-3xl font-bold text-[#171717] mt-3 mb-2">
+        <h2 className="text-2xl lg:text-3xl font-bold text-white mt-3 mb-2">
           Enter Property Information
         </h2>
-        <p className="text-[#525252]">
+        <p className="text-[#D1D5D0]">
           Fill in the property details below to get an AI-powered price estimate.
           All fields are required.
         </p>
@@ -346,7 +346,7 @@ export default function PredictionForm() {
             >
               <label
                 htmlFor={field.name}
-                className="block text-sm font-medium text-[#171717] mb-2"
+                className="block text-sm font-medium text-white mb-2"
               >
                 {field.label}
               </label>
@@ -365,10 +365,10 @@ export default function PredictionForm() {
                 max={range?.max}
                 step={field.step}
                 placeholder={field.placeholder}
-                className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 text-[#171717] placeholder:text-[#A3A3A3] focus:outline-none focus:ring-2 focus:ring-[#18794E] focus:ring-offset-2 ${
+                className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 text-white placeholder:text-[#737873] focus:outline-none focus:ring-2 focus:ring-[#18794E] focus:ring-offset-2 bg-white/5 ${
                   hasError
-                    ? "border-[#EF4444] bg-[#FEF2F2] focus:border-[#EF4444] focus:ring-[#EF4444]"
-                    : "border-[#E5E7E2] bg-white hover:border-[#18794E]/30"
+                    ? "border-[#EF4444] bg-[#7F1D1D]/30 focus:border-[#EF4444] focus:ring-[#EF4444]"
+                    : "border-white/20 hover:border-[#18794E]/50"
                 }`}
                 aria-invalid={hasError}
                 aria-describedby={hasError ? `${field.name}-error` : undefined}
@@ -386,7 +386,7 @@ export default function PredictionForm() {
                 </motion.p>
               )}
               {range && (
-                <p className="mt-1 text-xs text-[#A3A3A3]">
+                <p className="mt-1 text-xs text-[#737873]">
                   Range: {range.min.toLocaleString()} – {range.max.toLocaleString()}
                 </p>
               )}
@@ -403,7 +403,7 @@ export default function PredictionForm() {
         >
           <label
             htmlFor="ocean_proximity"
-            className="block text-sm font-medium text-[#171717] mb-2"
+            className="block text-sm font-medium text-white mb-2"
           >
             Ocean Proximity
           </label>
@@ -412,16 +412,16 @@ export default function PredictionForm() {
             name="ocean_proximity"
             value={formData.ocean_proximity}
             onChange={(e) => handleChange("ocean_proximity", e.target.value)}
-            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 text-[#171717] bg-white focus:outline-none focus:ring-2 focus:ring-[#18794E] focus:ring-offset-2 appearance-none bg-no-repeat bg-right pr-10 ${
+            className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 text-white bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#18794E] focus:ring-offset-2 appearance-none bg-no-repeat bg-right pr-10 ${
               submitAttempted && errors.ocean_proximity
-                ? "border-[#EF4444] bg-[#FEF2F2] focus:border-[#EF4444] focus:ring-[#EF4444]"
-                : "border-[#E5E7E2] hover:border-[#18794E]/30"
+                ? "border-[#EF4444] bg-[#7F1D1D]/30 focus:border-[#EF4444] focus:ring-[#EF4444]"
+                : "border-white/20 hover:border-[#18794E]/50"
             }`}
             aria-invalid={submitAttempted && !!errors.ocean_proximity}
             aria-describedby={submitAttempted && errors.ocean_proximity ? "ocean_proximity-error" : undefined}
             disabled={isLoading}
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%239CA3AF' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
               backgroundPosition: "right 0.75rem center",
               backgroundSize: "1.25rem",
             }}
