@@ -278,9 +278,9 @@ export default function PredictionForm() {
 
   if (!metadata) {
     return (
-      <div className="glass-card p-8 rounded-2xl text-center animate-fade-up">
+      <div className="glass-card p-8 rounded-2xl text-center animate-fade-up" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
         <Loader2 className="w-8 h-8 text-[#18794E] mx-auto animate-spin mb-4" aria-hidden="true" />
-        <p className="text-[#525252]">Loading form configuration...</p>
+        <p className="text-[#D1D5D0]">Loading form configuration...</p>
       </div>
     );
   }
@@ -317,7 +317,7 @@ export default function PredictionForm() {
       <AnimatePresence>
         {error && (
           <motion.div
-            className="flex items-start gap-3 p-4 bg-[#FEF2F2] border border-[#FECACA] rounded-xl mb-6"
+            className="flex items-start gap-3 p-4 bg-[#7F1D1D]/50 border border-[#EF4444]/30 rounded-xl mb-6"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -325,7 +325,7 @@ export default function PredictionForm() {
             role="alert"
           >
             <AlertCircle className="w-5 h-5 text-[#EF4444] mt-0.5 flex-shrink-0" aria-hidden="true" />
-            <p className="text-sm text-[#991B1B]">{error}</p>
+            <p className="text-sm text-[#FECACA]">{error}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -370,7 +370,7 @@ export default function PredictionForm() {
                     ? "border-[#EF4444] bg-[#7F1D1D]/30 focus:border-[#EF4444] focus:ring-[#EF4444]"
                     : "border-white/20 hover:border-[#18794E]/50"
                 }`}
-                aria-invalid={hasError}
+                aria-invalid={hasError ? "true" : "false"}
                 aria-describedby={hasError ? `${field.name}-error` : undefined}
                 disabled={isLoading}
               />
@@ -417,7 +417,7 @@ export default function PredictionForm() {
                 ? "border-[#EF4444] bg-[#7F1D1D]/30 focus:border-[#EF4444] focus:ring-[#EF4444]"
                 : "border-white/20 hover:border-[#18794E]/50"
             }`}
-            aria-invalid={submitAttempted && !!errors.ocean_proximity}
+            aria-invalid={submitAttempted && !!errors.ocean_proximity ? "true" : "false"}
             aria-describedby={submitAttempted && errors.ocean_proximity ? "ocean_proximity-error" : undefined}
             disabled={isLoading}
             style={{
@@ -470,7 +470,7 @@ export default function PredictionForm() {
           type="button"
           onClick={handleReset}
           disabled={isLoading}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-white/5 text-[#171717] border border-[#E5E7E2] rounded-xl font-medium text-base transition-all duration-200 hover:bg-white/10 hover:border-[#18794E]/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-white/5 text-white border border-white/20 rounded-xl font-medium text-base transition-all duration-200 hover:bg-white/10 hover:border-[#18794E]/30 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#18794E] focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Reset Form
         </button>
